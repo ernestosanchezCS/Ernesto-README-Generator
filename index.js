@@ -118,3 +118,13 @@ const input = [
             "It is an open project and everyone can contribute - please send and email requesting to be added as a contributor",
     },
 ];
+
+function writeReadMeFile(fileName, data) {
+    fs.writeFile(fileName, data, function (err) {
+        if (err) {
+            throw err;
+        }
+    });
+}
+
+init();
