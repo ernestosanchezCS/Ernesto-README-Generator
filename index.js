@@ -1,7 +1,6 @@
 const fs = require("fs");
 const axios = require("axios");
 const inquirer = require("inquirer");
-const pdf = require("html-pdf");
 
 const validateEmail = (email) => {
     var re =
@@ -20,7 +19,7 @@ const input = [
         type: "input",
         name: "fileName",
         message: "Please provide the name for a .md file",
-        default: "README",
+        default: "readme",
     },
     {
         type: "input",
@@ -127,6 +126,22 @@ function writeReadMeFile(fileName, data) {
     });
 }
 
+async function init() {
+    inquirer.prompt(input).then(function (data) {
+        console.log(data);
+
+        let url =
+            "https://api.github.com/users/" + data.Username + "/events/public";
+
+        axios.get(url).then(function (response) {
+            let email = data.email;
+            data["email"] = email;
+
+            writeReadMeFile(data.fileName + ".md", generateReadMeFile(data));
+        });
+    });
+}
+
 init();
 
 function getBadge(licence, color) {
@@ -151,4 +166,79 @@ function getLicense(license) {
     } else {
         return ``;
     }
+}
+
+function generateReadMeFile(data) {
+    return `
+# ${data.title}
+${getBadge(data.license, data.color)}
+    
+## Description
+    
+${data.description}
+    
+## Table of Contents 
+* [User Story](#userstory)
+* [Demo Video](#demovideo)
+* [Screen Shots](#screenshots)
+    
+* [Installation](#installation)
+    
+* [Usage](#usage)
+    
+* [License](#license)
+    
+* [Contributing](#contributing)
+    
+* [Tests](#tests)
+    
+* [Questions](#questions)
+## User Story
+    
+${data.userstory}
+## Demo Video
+    
+${data.demovideo}
+## Screenshots
+![Screen Shot](${data.firstscreenshot})
+![Screen Shot](${data.secondscreenshot})
+    
+   
+## Installation
+    
+This project uses 2 npm packages: 
+* [axios](https://www.npmjs.com/package/axios)
+* [inquirer](https://www.npmjs.com/package/inquirer)
+To install necessary dependencies, run the following command:
+    
+\`\`\`
+${data.iinstallation}
+\`\`\`
+\`\`\`
+${data.htmlpdfinstallation}
+\`\`\`
+    
+## Usage
+    
+To run tests, run the following command:
+    
+\`\`\`
+${data.usage}
+\`\`\`
+    
+${getLicense(data.license)}
+        
+## Contributing
+    
+${data.contributing}
+    
+## Tests
+    
+${data.test}
+    
+## Questions
+    
+If you have any questions about the repo, open an issue or contact [${
+        data.GitHub
+    }](https://github.com/${data.GitHub}/) directly at ${data.email}.`;
 }
