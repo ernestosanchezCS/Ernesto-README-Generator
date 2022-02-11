@@ -128,3 +128,27 @@ function writeReadMeFile(fileName, data) {
 }
 
 init();
+
+function getBadge(licence, color) {
+    if (licence !== "None") {
+        return `[![Licence : ${licence}](https://img.shields.io/badge/Licence-${licence}-${color}.svg)](https://opensource.org/licences/${licence})`;
+    } else if (licence === "Apache") {
+        return `[![Licence : ${licence}](https://img.shields.io/badge/Licence-${licence}-%202.0-${color}.svg)](https://opensource.org/licences/${licence}-2.0)`;
+    } else if (licence === "IPL") {
+        return `[![Licence : ${licence}](https://img.shields.io/badge/Licence-${licence}-${color}.svg)](https://opensource.org/licences/${licence}-1.0)`;
+    } else if (licence === "Unlicence") {
+        return `[![License: Unlicense](https://img.shields.io/badge/license-${licence}-${color}.svg)](http://unlicense.org/)`;
+    } else {
+        return ``;
+    }
+}
+
+function getLicense(license) {
+    if (license !== "None") {
+        return `
+## License
+    License is ${license} standard license.`;
+    } else {
+        return ``;
+    }
+}
