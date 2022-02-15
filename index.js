@@ -45,7 +45,7 @@ const input = [
         name: "description",
         message: "Please write a short description of your project",
         default:
-            "*Good README.md Generator* CLI (Command-Line Interface) apps that dynamically generates a professional README.md from a user's input using the Axios, Inquirer and HTML-PDF package.",
+            "*Good README.md Generator* CLI (Command-Line Interface) apps that dynamically generates a professional README.md from a user's input using the Axios,and Inquirer package.",
     },
     {
         type: "input",
@@ -58,7 +58,7 @@ const input = [
         type: "input",
         name: "demovideo",
         message: "Link to video",
-        default: "![Demo Good ReadMe Generator](https://.gif)",
+        default: "![Demo Good ReadMe Generator]",
     },
     {
         type: "input",
@@ -199,6 +199,7 @@ ${data.userstory}
 ## Demo Video
     
 ${data.demovideo}
+<video src='${data.demovideo}' width=180/>
 ## Screenshots
 ![Screen Shot](${data.firstscreenshot})
 ![Screen Shot](${data.secondscreenshot})
